@@ -1,0 +1,73 @@
+<%- include('partials/header', { pageTitle: constat.title }) %>
+  <a class="back" href="/dashboard">← Tableau de bord</a>
+  <div class="card">
+    <span class="badge <%= constat.status === 'decide' ? 'done' : (constat.status === 'au_vote' ? 'vote' : 'open') %>">
+      <%= constat.status === 'decide' ? 'Décidé' : (constat.status === 'au_vote' ? 'Au vote' : 'Ouvert') %>
+    </span>
+    <h1><%= constat.title %></h1>
+    <p class="meta">Ouvert par <%= memberName(constat.authorId) %></p>
+    <% if (constat.body) { %><p class="body"><%= constat.body %></p><% } %>
+
+    <% if (constat.status === 'au_vote') { %>
+      <a class="button primary" href="/votes/<%= constat.voteId %>">Aller au vote →</a>
+    <% } %>
+    <% if (constat.status === 'decide') { %>
+      <a class="button" href="/votes/<%= constat.voteId %>/result">Voir le résultat du vote →</a>
+    <% } %>
+  </div>
+
+  <div class="two-col">
+    <section class="card">
+      <h2>Délibération <span class="count"><%= constat.contributions.length %></span></h2>
+      <% if (!constat.contributions.length) { %><p class="empty">Aucune contribution pour l'instant.</p><% } %>
+      <ul class="contrib-list">
+        <% constat.contributions.forEach(function(c){ %>
+          <li>
+            <span class="ctype ctype-<%= c.ctype %>"><%= contributionTypes[c.ctype] %></span>
+            <span class="contrib-body"><%= c.body %></span>
+            <span class="contrib-author">— <%= memberName(c.authorId) %></span>
+          </li>
+        <% }) %>
+      </ul>
+      <% if (constat.status === 'ouvert') { %>
+        <form method="post" action="/constats/<%= constat.id %>/contributions" class="inline-form">
+          <select name="ctype">
+            <% Object.keys(contributionTypes).forEach(function(k){ %>
+              <option value="<%= k %>"><%= contributionTypes[k] %></option>
+            <% }) %>
+          </select>
+          <input type="text" name="body" placeholder="Votre contribution…" required />
+          <button type="submit">Ajouter</button>
+        </form>
+      <% } %>
+    </section>
+
+    <section class="card">
+      <h2>Solutions <span class="count"><%= constat.solutions.length %></span></h2>
+      <% if (!constat.solutions.length) { %><p class="empty">Aucune solution proposée.</p><% } %>
+      <ul class="solution-list">
+        <% constat.solutions.forEach(function(s){ %>
+          <li>
+            <strong><%= s.title %></strong>
+            <% if (s.body) { %><span class="sol-body"><%= s.body %></span><% } %>
+            <span class="contrib-author">— <%= memberName(s.authorId) %></span>
+          </li>
+        <% }) %>
+      </ul>
+      <% if (constat.status === 'ouvert') { %>
+        <form method="post" action="/constats/<%= constat.id %>/solutions" class="stack-form">
+          <input type="text" name="title" placeholder="Intitulé de la solution" required />
+          <input type="text" name="body" placeholder="Précision (facultatif)" />
+          <button type="submit">Proposer une solution</button>
+        </form>
+        <% if (canOpenVote) { %>
+          <form method="post" action="/constats/<%= constat.id %>/open-vote" class="open-vote">
+            <button type="submit" class="primary">Ouvrir le vote au jugement majoritaire</button>
+          </form>
+        <% } else if (constat.solutions.length < 2) { %>
+          <p class="fineprint">Il faut au moins deux solutions pour ouvrir un vote.</p>
+        <% } %>
+      <% } %>
+    </section>
+  </div>
+<%- include('partials/footer') %>

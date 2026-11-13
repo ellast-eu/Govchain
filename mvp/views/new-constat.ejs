@@ -1,0 +1,16 @@
+<%- include('partials/header', { pageTitle: 'Nouveau constat' }) %>
+  <div class="card narrow">
+    <h1>Ouvrir un constat</h1>
+    <p class="muted">Un constat décrit une situation à traiter. Les membres y réagiront, puis proposeront des solutions.</p>
+    <form method="post" action="/constats">
+      <label>Intitulé
+        <input type="text" name="title" required autofocus placeholder="Ex. : nos réunions sont trop longues" />
+      </label>
+      <label>Description
+        <textarea name="body" rows="5" placeholder="Décrivez la situation, le contexte, l'enjeu…"></textarea>
+      </label>
+      <button type="submit" class="primary">Ouvrir le constat</button>
+      <a class="button ghost" href="/dashboard">Annuler</a>
+    </form>
+  </div>
+<%- include('partials/footer') %>

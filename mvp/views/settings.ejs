@@ -1,0 +1,29 @@
+<%- include('partials/header', { pageTitle: 'Paramètres' }) %>
+  <h1>Paramètres de la gouvernance</h1>
+
+  <div class="card">
+    <h2><%= gov.name %></h2>
+    <p class="meta">
+      Forme : <strong><%= FORMS[gov.form].label %></strong>
+      <% if (referentName) { %> · Référent : <strong><%= referentName %></strong><% } %>
+    </p>
+    <p class="muted"><%= FORMS[gov.form].description %></p>
+  </div>
+
+  <div class="card">
+    <h2>Inviter un membre</h2>
+    <p class="muted">Partagez ce lien. La personne choisira son nom en rejoignant.</p>
+    <div class="invite-box">
+      <input type="text" readonly value="<%= inviteLink %>" onclick="this.select()" />
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Membres <span class="count"><%= members.length %></span></h2>
+    <ul class="members">
+      <% members.forEach(function(m){ %>
+        <li><%= m.name %><% if (m.id === gov.referentId) { %> <span class="chip-win">référent</span><% } %></li>
+      <% }) %>
+    </ul>
+  </div>
+<%- include('partials/footer') %>

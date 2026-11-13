@@ -1,0 +1,36 @@
+<%- include('partials/header', { pageTitle: 'Vote' }) %>
+  <a class="back" href="/constats/<%= constat.id %>">← Constat</a>
+  <div class="card">
+    <span class="badge vote">Au vote</span>
+    <h1><%= constat.title %></h1>
+    <p class="muted">Attribuez une mention à chaque solution. Le jugement majoritaire retiendra la solution dont la mention médiane est la plus haute.</p>
+
+    <% if (hasVoted) { %>
+      <div class="notice ok">Votre bulletin est enregistré. Merci !</div>
+      <div class="actions">
+        <a class="button" href="/votes/<%= vote.id %>/result">Voir l'état du dépouillement →</a>
+        <form method="post" action="/votes/<%= vote.id %>/close" onsubmit="return confirm('Clore le vote et enregistrer la décision ?');">
+          <button type="submit" class="primary">Clore le vote</button>
+        </form>
+      </div>
+      <p class="fineprint">Clôturer calcule le classement au jugement majoritaire et inscrit la décision au journal.</p>
+    <% } else { %>
+      <form method="post" action="/votes/<%= vote.id %>/ballot" class="ballot">
+        <% vote.options.forEach(function(o){ %>
+          <fieldset class="ballot-option">
+            <legend><%= o.label %></legend>
+            <div class="mentions">
+              <% mentions.forEach(function(m, i){ %>
+                <label class="mention m<%= i %>">
+                  <input type="radio" name="grade_<%= o.id %>" value="<%= i %>" required />
+                  <span><%= m %></span>
+                </label>
+              <% }) %>
+            </div>
+          </fieldset>
+        <% }) %>
+        <button type="submit" class="primary">Valider mon bulletin</button>
+      </form>
+    <% } %>
+  </div>
+<%- include('partials/footer') %>

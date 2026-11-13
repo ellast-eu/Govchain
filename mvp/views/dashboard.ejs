@@ -1,0 +1,46 @@
+<%- include('partials/header', { pageTitle: 'Tableau de bord' }) %>
+  <div class="page-head">
+    <h1>Tableau de bord</h1>
+    <a class="button primary" href="/constats/new">+ Ouvrir un constat</a>
+  </div>
+
+  <% function tile(list, memberName) { %><% } %>
+
+  <section class="col-group">
+    <div class="column">
+      <h2 class="col-title">Au vote <span class="count"><%= auVote.length %></span></h2>
+      <% if (!auVote.length) { %><p class="empty">Rien à voter pour l'instant.</p><% } %>
+      <% auVote.forEach(function(c){ %>
+        <a class="constat-card is-vote" href="/votes/<%= c.voteId %>">
+          <span class="badge vote">Au vote</span>
+          <h3><%= c.title %></h3>
+          <p class="meta"><%= c.solutions.length %> solution(s) · ouvert par <%= memberName(c.authorId) %></p>
+        </a>
+      <% }) %>
+    </div>
+
+    <div class="column">
+      <h2 class="col-title">En délibération <span class="count"><%= ouverts.length %></span></h2>
+      <% if (!ouverts.length) { %><p class="empty">Aucun constat ouvert.</p><% } %>
+      <% ouverts.forEach(function(c){ %>
+        <a class="constat-card" href="/constats/<%= c.id %>">
+          <span class="badge open">Ouvert</span>
+          <h3><%= c.title %></h3>
+          <p class="meta"><%= c.contributions.length %> contribution(s) · <%= c.solutions.length %> solution(s)</p>
+        </a>
+      <% }) %>
+    </div>
+
+    <div class="column">
+      <h2 class="col-title">Décidés <span class="count"><%= decides.length %></span></h2>
+      <% if (!decides.length) { %><p class="empty">Aucune décision encore.</p><% } %>
+      <% decides.forEach(function(c){ %>
+        <a class="constat-card is-done" href="/constats/<%= c.id %>">
+          <span class="badge done">Décidé</span>
+          <h3><%= c.title %></h3>
+          <p class="meta">voir le constat</p>
+        </a>
+      <% }) %>
+    </div>
+  </section>
+<%- include('partials/footer') %>

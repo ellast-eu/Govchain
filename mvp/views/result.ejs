@@ -1,0 +1,32 @@
+<%- include('partials/header', { pageTitle: 'Résultat' }) %>
+  <a class="back" href="/constats/<%= constat.id %>">← Constat</a>
+  <div class="card">
+    <span class="badge done">Décidé</span>
+    <h1>Résultat — <%= constat.title %></h1>
+    <p class="muted">Jugement majoritaire · <%= result.participation %> bulletin(s)</p>
+
+    <ol class="ranking">
+      <% result.ranking.forEach(function(o, i){ %>
+        <li class="<%= i === 0 ? 'winner' : '' %>">
+          <div class="rank-num"><%= o.rank %></div>
+          <div class="rank-body">
+            <h3><%= o.label %> <% if (i === 0) { %><span class="chip-win">retenue</span><% } %></h3>
+            <div class="gauge">
+              <span class="maj-mention m<%= o.majority %>"><%= o.majorityLabel %></span>
+              <span class="gauge-detail">
+                <%= Math.round(o.proportionAbove * 100) %>% au-dessus ·
+                <%= Math.round(o.proportionBelow * 100) %>% en dessous
+              </span>
+            </div>
+          </div>
+        </li>
+      <% }) %>
+    </ol>
+
+    <p class="fineprint">
+      La mention affichée est la <em>mention majoritaire</em> (médiane). En cas d'égalité, le départage
+      suit la procédure du jugement majoritaire (retrait de médiane). La solution de tête est inscrite au
+      <a href="/journal">journal des décisions</a>.
+    </p>
+  </div>
+<%- include('partials/footer') %>

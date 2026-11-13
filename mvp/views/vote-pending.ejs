@@ -1,0 +1,7 @@
+<%- include('partials/header', { pageTitle: 'Vote en cours' }) %>
+  <div class="card narrow">
+    <h1>Vote en cours</h1>
+    <p class="muted">Ce vote n'est pas encore clos. Le résultat au jugement majoritaire s'affichera une fois le dépouillement effectué.</p>
+    <a class="button primary" href="/votes/<%= vote.id %>">Aller au vote →</a>
+  </div>
+<%- include('partials/footer') %>

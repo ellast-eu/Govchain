@@ -1,0 +1,14 @@
+<%- include('partials/header', { pageTitle: 'Rejoindre' }) %>
+  <div class="card narrow">
+    <h1>Rejoindre « <%= gov.name %> »</h1>
+    <p class="muted">Forme de gouvernance : <strong><%= FORMS[gov.form].label %></strong></p>
+    <form method="post" action="/join">
+      <input type="hidden" name="token" value="<%= token %>" />
+      <label>Votre nom (tel qu'il apparaîtra aux autres membres)
+        <input type="text" name="name" required autofocus placeholder="Prénom Nom" />
+      </label>
+      <button type="submit" class="primary">Rejoindre la gouvernance</button>
+    </form>
+    <p class="fineprint">Aucun mot de passe, aucune pièce d'identité : la communauté est connue, l'unicité est garantie hors-ligne (banc d'essai).</p>
+  </div>
+<%- include('partials/footer') %>

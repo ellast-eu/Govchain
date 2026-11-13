@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle + ' — Govchain' : 'Govchain' %></title>
+  <link rel="stylesheet" href="/public/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">GOVCHAIN<span class="brand-sub">banc d'essai</span></a>
+    <% if (member) { %>
+      <nav class="nav">
+        <a href="/dashboard">Tableau de bord</a>
+        <a href="/journal">Journal</a>
+        <a href="/settings">Paramètres</a>
+      </nav>
+      <div class="whoami">
+        <span class="gov-chip"><%= gov ? gov.name : '' %></span>
+        <strong><%= member.name %></strong>
+        <a class="logout" href="/logout">déconnexion</a>
+      </div>
+    <% } %>
+  </header>
+  <main class="wrap">

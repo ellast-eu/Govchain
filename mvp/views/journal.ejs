@@ -1,0 +1,19 @@
+<%- include('partials/header', { pageTitle: 'Journal des décisions' }) %>
+  <h1>Journal des décisions</h1>
+  <p class="muted">La mémoire de la gouvernance : chaque décision adoptée, dans l'ordre.</p>
+  <% if (!decisions.length) { %>
+    <p class="empty">Aucune décision n'a encore été adoptée.</p>
+  <% } %>
+  <ul class="journal">
+    <% decisions.forEach(function(d){ var c = constatOf(d.constatId); %>
+      <li>
+        <div class="j-date"><%= new Date(d.at).toLocaleString('fr-FR') %></div>
+        <div class="j-body">
+          <div class="j-constat"><%= c ? c.title : '(constat supprimé)' %></div>
+          <div class="j-choice">Solution retenue : <strong><%= d.chosenLabel %></strong></div>
+          <a class="j-link" href="/votes/<%= d.voteId %>/result">détail du vote →</a>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+<%- include('partials/footer') %>

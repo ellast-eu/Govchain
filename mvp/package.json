@@ -1,0 +1,17 @@
+{
+  "name": "govchain-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Govchain — banc d'essai (MVP). Délibération structurée + jugement majoritaire + formes de gouvernance, sur un cœur événementiel append-only.",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node src/seed.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  },
+  "license": "AGPL-3.0-or-later"
+}
