@@ -4,11 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><%= typeof pageTitle !== 'undefined' ? pageTitle + ' — Govchain' : 'Govchain' %></title>
+  <link rel="icon" type="image/png" href="/public/img/favicon-64.png" />
   <link rel="stylesheet" href="/public/style.css" />
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="/">GOVCHAIN<span class="brand-sub">banc d'essai</span></a>
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/public/img/govchain-icon-transparent.png" alt="" />
+      <span class="brand-name">Govchain</span>
+      <span class="brand-sub">banc d'essai</span>
+    </a>
     <% if (member) { %>
       <nav class="nav">
         <a href="/dashboard">Tableau de bord</a>
